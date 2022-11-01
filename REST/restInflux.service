@@ -1,0 +1,12 @@
+[Unit]
+The service for the python influx rest api
+
+[service]
+TimeoutStartSec=1
+ExecStart=/home/kelso/Documents/python/detectorAutomation/REST/rest.py
+User=kelso
+Group=kelso
+StandardOutput=null
+
+[install]
+WantedBy=multi-user.target
