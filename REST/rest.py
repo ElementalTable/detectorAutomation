@@ -12,13 +12,16 @@ dbPass = 'root'
 dbName = 'detectorCounts'
 client = InfluxDBClient('localhost', 8086, dbUser, dbPass, dbName)
 
-result = client.query('SELECT count(count)/60 FROM Counts WHERE time > now() - 1h')
+def queryDatabase(client):
+    data = client.query('SELECT count(count)/60 FROM Counts WHERE time > now() - 1h')
+    return(data)
 
 app = Flask(__name__)
 api = Api(app)
 
 class countsPerMinute(Resource):
     def get(self):
+        result = queryDatabase(client)
         data = result.raw["series"][0]["values"][0][1]
         return data, 200
     pass
